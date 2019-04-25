@@ -19,7 +19,6 @@ Java多线程
   + 一个线程可以创建和撤销另一个线程
   + 线程的调度和管理由进程本身完成
   
---------------------------
 
 线程创建的三种方式
 ===============
@@ -27,7 +26,31 @@ Java多线程
 + 继承Thread类
   + 代码：
   ```java
+  /**
+   * @author Chris Chen
+   * @date 2019/4/25 下午3:54
+   */
+  public class FirstThread extends Thread{
+      private int i;
   
+      @Override
+      public void run(){
+          for (; i< 100; i++){
+              System.out.println(getName() + " " + i);
+          }
+      }
+  
+      public static void main(String[] args) {
+          for (int i=0; i<100; i++){
+              System.out.println(Thread.currentThread() + " " + i);
+              if (i == 20 ){
+                  new FirstThread().start();
+                  new FirstThread().start();
+              }
+          }
+      }
+  }
+
   ```
 + 实现Runnable接口
 + 实现Callable接口
