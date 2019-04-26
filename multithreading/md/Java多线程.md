@@ -24,6 +24,7 @@ Java多线程
 ===============
 
 + 继承Thread类
+  + 特点：
   + 代码：
   ```java
   /**
@@ -53,4 +54,37 @@ Java多线程
 
   ```
 + 实现Runnable接口
+  + 特点：
+    + 共享线程类的实例变量
+    + Runnable接口是函数式接口（Java 8）
+  + 代码：
+  ```java
+  /**
+   * @author Chris Chen
+   * @date 2019/4/26 下午3:41
+   */
+  public class SecondThread implements Runnable{
+      private int i;
+  
+      @Override
+      public void run(){
+          for (; i<100; i++){
+              System.out.println(Thread.currentThread().getName() + " " + i);
+          }
+      }
+  
+      public static void main(String[] args) {
+          for (int i=0; i< 100; i++){
+              System.out.println(Thread.currentThread().getName() + " " + i);
+              if(i==20){
+                  SecondThread secondThread = new SecondThread();
+                  new Thread(secondThread, "newThread1").start();
+                  new Thread(secondThread, "newThread2").start();
+  
+              }
+          }
+      }
+  }
+
+  ```
 + 实现Callable接口
