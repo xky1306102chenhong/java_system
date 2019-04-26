@@ -25,6 +25,7 @@ Java多线程
 
 + 继承Thread类
   + 特点：
+    + 多个线程间无法共享线程类的实例变量
   + 代码：
   ```java
   /**
@@ -57,6 +58,7 @@ Java多线程
   + 特点：
     + 共享线程类的实例变量
     + Runnable接口是函数式接口（Java 8）
+    + Thread类的作用就是把run()方法包装成线程执行体
   + 代码：
   ```java
   /**
@@ -87,4 +89,6 @@ Java多线程
   }
 
   ```
-+ 实现Callable接口
++ 使用Callable和Future（Runnable接口的增强版）
+  + 特点： 
+    + Future接口代表call()方法的返回值
