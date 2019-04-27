@@ -13,10 +13,11 @@ public class SecondThread implements Runnable{
     }
 
     public static void main(String[] args) {
+
+        SecondThread secondThread = new SecondThread();
         for (int i=0; i< 100; i++){
             System.out.println(Thread.currentThread().getName() + " " + i);
             if(i==20){
-                SecondThread secondThread = new SecondThread();
                 new Thread(secondThread, "newThread1").start();
                 new Thread(secondThread, "newThread2").start();
 

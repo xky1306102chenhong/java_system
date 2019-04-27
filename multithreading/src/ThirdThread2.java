@@ -6,26 +6,25 @@ import java.util.concurrent.FutureTask;
  * @author Chris Chen
  * @date 2019/4/27 上午10:26
  */
-public class ThirdThread implements Callable<Integer> {
-    //public int i = 0;
-
-    @Override
-    public Integer call() throws Exception {
-        int i = 0;
-        for (; i < 100; i++) {
-            System.out.println(Thread.currentThread().getName() + ": " + i);
-        }
-        return i;
-    }
+public class ThirdThread2 {
 
     public static void main(String[] args) {
+        Callable<Integer> callable = new Callable<Integer>() {
+            @Override
+            public Integer call() throws Exception {
+                int i=0;
+                for (; i < 100; i++){
+                    System.out.println(Thread.currentThread().getName() + ": "+ i);
+                }
+                return i;
+            }
+        };
 
-        Callable<Integer> callable = new ThirdThread();
         FutureTask<Integer> futureTask = new FutureTask<Integer>(callable);
 
-        for (int i = 0; i < 100; i++) {
+        for (int i=0; i<100; i++){
             System.out.println(Thread.currentThread().getName() + " 的循环变量i的值: " + i);
-            if (i == 20) {
+            if(i==20){
                 new Thread(futureTask, "有返回值的线程").start();
             }
         }
