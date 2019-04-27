@@ -76,10 +76,11 @@ Java多线程
       }
   
       public static void main(String[] args) {
+  
+          SecondThread secondThread = new SecondThread();
           for (int i=0; i< 100; i++){
               System.out.println(Thread.currentThread().getName() + " " + i);
               if(i==20){
-                  SecondThread secondThread = new SecondThread();
                   new Thread(secondThread, "newThread1").start();
                   new Thread(secondThread, "newThread2").start();
   
@@ -97,19 +98,21 @@ Java多线程
    */
   public class SecondThread2 {
       public static void main(String[] args) {
+          
+          Runnable runnable = new Runnable() {
+              public int i;
+              @Override
+              public void run() {
+                  for (;i<100;i++){
+                      System.out.println(Thread.currentThread().getName()+": "+i);
+                  }
+              }
+          };
+          
           for(int i=0; i<100;i++){
               System.out.println(Thread.currentThread().getName()+": "+i);
-  
               if(i==20){
-                  Runnable runnable = new Runnable() {
-                      public int i;
-                      @Override
-                      public void run() {
-                          for (;i<100;i++){
-                              System.out.println(Thread.currentThread().getName()+": "+i);
-                          }
-                      }
-                  };
+                  
                   new Thread(runnable, "newThread-1").start();
                   new Thread(runnable, "newThread-2").start();
               }
@@ -127,19 +130,20 @@ Java多线程
   
   public class SecondThread3 {
       public static void main(String[] args) {
-          for (int i=0; i<100;i++){
-              System.out.println(Thread.currentThread().getName() +": "+ i);
-              if(i==20){
-                  /*
-                  无法在实现Runnable接口的类里增加实例变量，因此没有所谓共享线程类的实例变量
-                   */
-                  Runnable runnable = ()->{
-                      for (int j=0;j<100;j++){
-                          System.out.println(Thread.currentThread().getName()+": "+j);
-                      }
-                  };
+          /*
+           无法在实现Runnable接口的类里增加实例变量，因此没有所谓共享线程类的实例变量
+           */
+          Runnable runnable = () -> {
+              for (int j = 0; j < 100; j++) {
+                  System.out.println(Thread.currentThread().getName() + ": " + j);
+              }
+          };
+  
+          for (int i = 0; i < 100; i++) {
+              System.out.println(Thread.currentThread().getName() + ": " + i);
+              if (i == 20) {
                   new Thread(runnable, "newThread-1").start();
-                  new Thread(runnable,"newThread-2").start();
+                  new Thread(runnable, "newThread-2").start();
               }
           }
       }
