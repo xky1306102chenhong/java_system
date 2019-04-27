@@ -31,6 +31,9 @@ public class ThirdThread implements Callable<Integer> {
         }
 
         try {
+            /*
+            futureTask.get()会导致主线程被阻塞，直到call()方法结束并返回为止
+             */
             System.out.println(futureTask.get());
         } catch (InterruptedException e) {
             e.printStackTrace();

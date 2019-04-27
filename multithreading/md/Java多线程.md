@@ -121,7 +121,7 @@ Java多线程
   }
 
   ```
-  + lambda表达式写法(和前两种方法对比，无法写实现Runnable接口的类的实例变量)
+  + lambda表达式写法(和前两种方法对比，无法写实现Runnable接口的类的实例变量)：
   ```java
   /**
    * @author Chris Chen
@@ -188,6 +188,9 @@ Java多线程
           }
   
           try {
+              /*
+              futureTask.get()会导致主线程被阻塞，直到call()方法结束并返回为止
+              */
               System.out.println(futureTask.get());
           } catch (InterruptedException e) {
               e.printStackTrace();
@@ -244,7 +247,7 @@ Java多线程
   }
 
   ```
-  + lambda表达式写法；
+  + lambda表达式写法：
   ```java
   import java.util.concurrent.Callable;
   import java.util.concurrent.ExecutionException;
@@ -281,3 +284,8 @@ Java多线程
   }
 
   ```
+  + **小结**
+    + 实现Runnable接口和使用Callable和Future方式下，多线程可以共享同一个target对象。
+    + 不要显示创建线程，请使用线程池。
+    线程资源必须通过线程池提供，不允许在应用中自行显式创建线程。 
+    说明：使用线程池的好处是减少在创建和销毁线程上所花的时间以及系统资源的开销，解决资源不足的问题。如果不使用线程池，有可能造成系统创建大量同类线程而导致消耗完内存或者“过度切换”的问题。
