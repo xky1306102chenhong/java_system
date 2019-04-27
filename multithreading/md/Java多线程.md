@@ -118,7 +118,7 @@ Java多线程
   }
 
   ```
-  + lambda表达式写法
+  + lambda表达式写法(和前两种方法对比，无法写实现Runnable接口的类的实例变量)
   ```java
   /**
    * @author Chris Chen
