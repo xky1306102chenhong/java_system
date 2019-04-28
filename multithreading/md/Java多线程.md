@@ -326,4 +326,129 @@ Java多线程
 
 线程同步
 ==================
-+ 
++ 线程安全：
+  + 银行取钱问题：
+    + 用户输入账号、密码，系统判断用户的账号、密码是否匹配
+    + 用户输入取款金额
+    + 系统判断账户余额是否大于取款金额
+    + 如果余额大于取款金额，则取款成功；否则失败
+  + 代码：
+    + 账号信息：  
+    ```java
+    package com.chris.threadsecurity;
+    
+    /**
+     * @author Chris Chen
+     * @date 2019/4/28 上午10:04
+     */
+    public class Account {
+    
+        private String accountNo;
+        private double balance;
+    
+        public Account(String accountNo, double balance) {
+            this.accountNo = accountNo;
+            this.balance = balance;
+        }
+    
+        public String getAccountNo() {
+            return accountNo;
+        }
+    
+        public void setAccountNo(String accountNo) {
+            this.accountNo = accountNo;
+        }
+    
+        public double getBalance() {
+            return balance;
+        }
+    
+        public void setBalance(double balance) {
+            this.balance = balance;
+        }
+    
+        @Override
+        public boolean equals(Object obj){
+            if(this == obj){
+                return true;
+            }
+            if(obj != null && obj.getClass() == Account.class){
+                Account target = (Account) obj;
+                return target.getAccountNo().equals(accountNo);
+            }
+            return false;
+        }
+    
+        @Override
+        public int hashCode(){
+            return accountNo.hashCode();
+        }
+    }
+
+    ```
+    + 取钱线程：
+    ```java
+    package com.chris.threadsecurity;
+    
+    /**
+     * @author Chris Chen
+     * @date 2019/4/28 上午10:20
+     */
+    public class DrawThread extends Thread {
+        /**
+         account: 模拟用户账户
+         drawAmount: 当前取钱线程所希望取的钱数
+         */
+        private Account account;
+        private double drawAmount;
+    
+        public DrawThread(String name, Account account, double drawAmount){
+            super(name);
+            this.account = account;
+            this.drawAmount = drawAmount;
+        }
+    
+        @Override
+        public void run(){
+            /*
+            如果余额大于取钱数目
+             */
+            if(account.getBalance() >= drawAmount){
+                /*
+                吐出钞票
+                 */
+                System.out.println(getName() + "取钱成功！吐出钞票：" + drawAmount);
+                /*
+                修改余额
+                 */
+                account.setBalance(account.getBalance() - drawAmount);
+                System.out.println("\t余额为：" + account.getBalance());
+            }else {
+                System.out.println(getName() + "取钱失败！余额不足！");
+            }
+    
+        }
+    
+    }
+
+    ```
+    + 主程序：
+    ```java
+    package com.chris.threadsecurity;
+    
+    /**
+     * @author Chris Chen
+     * @date 2019/4/28 上午10:34
+     */
+    public class DrawTest {
+        public static void main(String[] args) {
+            /*
+            创建一个账户
+             */
+            Account account = new Account("1234567", 1000);
+            new DrawThread("甲", account, 800).start();
+            new DrawThread("乙", account, 800).start();
+        }
+    }
+
+    ```
