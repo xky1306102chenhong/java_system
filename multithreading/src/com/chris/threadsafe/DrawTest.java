@@ -1,4 +1,4 @@
-package com.chris.threadsecurity;
+package com.chris.threadsafe;
 
 /**
  * @author Chris Chen
@@ -10,7 +10,7 @@ public class DrawTest {
         创建一个账户
          */
         Account account = new Account("1234567", 1000);
-        new DrawThread("甲", account, 800).start();
-        new DrawThread("乙", account, 800).start();
+        new DrawThread2("甲", account, 800).start();
+        new DrawThread2("乙", account, 800).start();
     }
 }

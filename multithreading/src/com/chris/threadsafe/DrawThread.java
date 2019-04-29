@@ -1,4 +1,4 @@
-package com.chris.threadsecurity;
+package com.chris.threadsafe;
 
 /**
  * @author Chris Chen
