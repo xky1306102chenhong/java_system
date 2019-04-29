@@ -9,8 +9,8 @@ public class DrawTest {
         /*
         创建一个账户
          */
-        Account account = new Account("1234567", 1000);
-        new DrawThread2("甲", account, 800).start();
-        new DrawThread2("乙", account, 800).start();
+        Account2 account2 = new Account2("1234567", 1000);
+        new DrawThread3("甲", account2, 800).start();
+        new DrawThread3("乙", account2, 800).start();
     }
 }

@@ -335,7 +335,7 @@ Java多线程
   + 代码：
     + 账号信息：  
     ```java
-    package com.chris.threadsecurity;
+    package com.chris.threadsafe;
     
     /**
      * @author Chris Chen
@@ -388,7 +388,7 @@ Java多线程
     ```
     + 取钱线程：
     ```java
-    package com.chris.threadsecurity;
+    package com.chris.threadsafe;
     
     /**
      * @author Chris Chen
@@ -434,7 +434,7 @@ Java多线程
     ```
     + 主程序：
     ```java
-    package com.chris.threadsecurity;
+    package com.chris.threadsafe;
     
     /**
      * @author Chris Chen
@@ -455,7 +455,7 @@ Java多线程
 + 解决方法一：同步代码块
   + 代码：
     ```java
-    package com.chris.threadsecurity;
+    package com.chris.threadsafe;
     
     /**
      * @author Chris Chen
@@ -498,3 +498,77 @@ Java多线程
     }
 
     ```
++ 解决方法二：同步方法
+  + 线程安全的类
+    + 特征1：该类的对象可以被多个线程安全地访问
+    + 特征2：每个线程调用该对象的任意方法后都能得到正确的结果
+    + 特征3：每个线程调用该对象的任意方法后，该对象状态依然保持合理状态
+  + 不可变类总是线程安全的。
+  + 线程安全的Account类：
+  ```java
+  package com.chris.threadsafe;
+  
+  /**
+   * @author Chris Chen
+   * @date 2019/4/29 上午9:26
+   */
+  public class Account2 {
+      private String accountNo;
+      private double balance;
+  
+      public Account2(){
+  
+      }
+  
+      public Account2(String accountNo, double balance) {
+          this.accountNo = accountNo;
+          this.balance = balance;
+      }
+  
+      public String getAccountNo() {
+          return accountNo;
+      }
+  
+      public void setAccountNo(String accountNo) {
+          this.accountNo = accountNo;
+      }
+  
+      public double getBalance() {
+          return balance;
+      }
+  
+      /*
+      因为账户余额不允许随便修改，所以只为balance提供getter
+       */
+  
+      /**
+       * 提供一个线程安全的draw()方法来完成取钱操作
+       * param：drawAmount 取钱金额
+       */
+      public synchronized void draw(double drawAmount){
+          /*
+          如果余额大于取钱数目
+           */
+          if(balance >= drawAmount){
+              /*
+              吐出钞票
+               */
+              System.out.println(Thread.currentThread().getName() + "取钱成功！吐出钞票：" + drawAmount);
+              /*
+              修改余额
+               */
+              balance -= drawAmount;
+              System.out.println("\t余额为：" + balance);
+          }else {
+              System.out.println(Thread.currentThread().getName() + "取钱失败！余额不足！");
+          }
+      }
+  }
+
+   ```
+   + 可变类的线程安全是以牺牲程序运行效率为代价的，为减少线程安全带来的负面影响，可采取如下策略：
+     + 不要对线程安全类的所有方法都进行同步
+     + 如果可变类有两种运行环境：单线程环境和多线程环境，则应该为可变类提供两种版本(StringBuilder、StringBuffer)
+   + 释放同步监视器的锁定
+     + 
+     
