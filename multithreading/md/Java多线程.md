@@ -323,6 +323,7 @@ Java多线程
   + 每个线程默认的优先级和创建它的父线程的优先级相同
   + Thread类提供了setPriority()方法来设置指定线程的优先级
   + 尽量使用三个静态常量来设置优先级，以保证有最好的可移植性
++ 尽量避免使用suspend()、yield()、resume()、stop()
 
 线程同步
 ==================
@@ -569,6 +570,96 @@ Java多线程
    + 可变类的线程安全是以牺牲程序运行效率为代价的，为减少线程安全带来的负面影响，可采取如下策略：
      + 不要对线程安全类的所有方法都进行同步
      + 如果可变类有两种运行环境：单线程环境和多线程环境，则应该为可变类提供两种版本(StringBuilder、StringBuffer)
-   + 释放同步监视器的锁定
-     + 
+   + 释放同步监视器的锁定(4种情况)
+
++ 解决方法3：同步锁
+  + 使用同步锁的Account类：
+  ```java
+  package com.chris.threadsafe;
+  
+  import java.util.concurrent.locks.ReentrantLock;
+  
+  /**
+   * @author Chris Chen
+   * @date 2019/4/29 下午3:18
+   */
+  public class Account3 {
+      /**
+       * 定义锁对象
+       */
+      private final ReentrantLock lock = new ReentrantLock();
+  
+      private String accountNo;
+      private double balance;
+  
+      public Account3() {
+      }
+  
+      public Account3(String accountNo, double balance) {
+          this.accountNo = accountNo;
+          this.balance = balance;
+      }
+  
+      public String getAccountNo() {
+          return accountNo;
+      }
+  
+      public void setAccountNo(String accountNo) {
+          this.accountNo = accountNo;
+      }
+  
+      public double getBalance() {
+          return balance;
+      }
+  
+      @Override
+      public boolean equals(Object obj){
+          if(this == obj){
+              return true;
+          }
+          if(obj != null && obj.getClass() == Account.class){
+              Account target = (Account) obj;
+              return target.getAccountNo().equals(accountNo);
+          }
+          return false;
+      }
+  
+      @Override
+      public int hashCode(){
+          return accountNo.hashCode();
+      }
+  
+      public void draw(double drawAmount){
+          /*
+          加锁
+           */
+          lock.lock();
+  
+          try {
+              /*
+          如果余额大于取钱数目
+           */
+              if(balance >= drawAmount){
+              /*
+              吐出钞票
+               */
+                  System.out.println(Thread.currentThread().getName() + "取钱成功！吐出钞票：" + drawAmount);
+              /*
+              修改余额
+               */
+                  balance -= drawAmount;
+                  System.out.println("\t余额为：" + balance);
+              }else {
+                  System.out.println(Thread.currentThread().getName() + "取钱失败！余额不足！");
+              }
+          }finally {
+              /*
+              修改完成，释放锁
+               */
+              lock.unlock();
+          }
+      }
+  }
+
+   ```
      

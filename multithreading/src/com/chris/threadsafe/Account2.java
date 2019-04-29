@@ -55,4 +55,20 @@ public class Account2 {
             System.out.println(Thread.currentThread().getName() + "取钱失败！余额不足！");
         }
     }
+    @Override
+    public boolean equals(Object obj){
+        if(this == obj){
+            return true;
+        }
+        if(obj != null && obj.getClass() == Account.class){
+            Account target = (Account) obj;
+            return target.getAccountNo().equals(accountNo);
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode(){
+        return accountNo.hashCode();
+    }
 }
