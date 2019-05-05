@@ -735,4 +735,17 @@ Java多线程
         }
     }
 
-    ```    
+    ```  
+
+线程通信
+=============
++ 传统的线程通信
+  + 借助于Object类提供的wait(), notify(), notifyAll()三个方法
+  + 但这三个方法必须由同步监视器对象来调用
+  + 代码见com.chris.threadcommunication
++ 使用Condition控制线程通信
+  + 借助于Condition类的await(), signal(), signalAll()三个方法
+  + 但三个方法必须使用Condition对象来调用
+  + 代码见com.chris.threadcommunication2
++ 使用阻塞队列(BlockingQueue)控制线程通信
+  +   
