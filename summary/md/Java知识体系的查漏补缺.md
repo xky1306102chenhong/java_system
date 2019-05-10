@@ -6,9 +6,9 @@
 2、说一下map的分类和常见的情况
   + 分类：HashMap、LinkedHashMap、SortedMap接口、TreeMap实现类、Hashtable、Properties、EnumMap、IdentityHashMap、WeakHashMap（6+3）
   + 常见的情况：  
-    + HashMap: 基于hash算法实现，线程不安全，但是可以通过Collections工具类变为线程安全，null可以作为key，但是key为null的key-value对最多只能有一个，Java 8改进了HashMap的实现，使得HashMap存在key冲突时依然具有较好的性能，
-    key相等的标准是两个key的通过equals方法返回true，且两个key的hashCode值也相等。
-    + Hashtable：基于hash算法实现，线程安全，古老的类，建议使用HashMap
+    + HashMap: 基于hash算法实现，线程不安全，但是可以通过Collections工具类变为线程安全；null可以作为key，但是key为null的key-value对最多只能有一个；Java 8改进了HashMap的实现，使得HashMap存在key冲突时依然具有较好的性能；
+    key相等的标准是两个key的通过equals方法返回true，且两个key的hashCode值也相等；而value相等的标准是只要两个对象通过equals方法返回true即可。
+    + Hashtable：基于hash算法实现，线程安全，古老的类，建议使用HashMap; key,value都不可以为null；key，value相等都标准同HashMap。
     + LinkedHashMap：使用双向链表来维护key-value对的次序，性能略低于HashMap，但是在迭代访问Map里的全部元素时将有较好的性能
 
 
