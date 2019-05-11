@@ -7,10 +7,15 @@
   + 分类：HashMap、LinkedHashMap、SortedMap接口、TreeMap实现类、Hashtable、Properties、EnumMap、IdentityHashMap、WeakHashMap（6+3）
   + 常见的情况：  
     + HashMap: 基于hash算法实现，线程不安全，但是可以通过Collections工具类变为线程安全；null可以作为key，但是key为null的key-value对最多只能有一个；Java 8改进了HashMap的实现，使得HashMap存在key冲突时依然具有较好的性能；
-    key相等的标准是两个key的通过equals方法返回true，且两个key的hashCode值也相等；而value相等的标准是只要两个对象通过equals方法返回true即可。
-    + Hashtable：基于hash算法实现，线程安全，古老的类，建议使用HashMap; key,value都不可以为null；key，value相等都标准同HashMap。
+    key相等的标准是两个key的通过equals方法返回true，且两个key的hashCode值也相等；而value相等的标准是只要两个对象通过equals方法返回true即可；尽量不用使用可变对象最为key。
     + LinkedHashMap：使用双向链表来维护key-value对的次序，性能略低于HashMap，但是在迭代访问Map里的全部元素时将有较好的性能
-
+    + Hashtable：基于hash算法实现，线程安全，古老的类，建议使用HashMap; key,value都不可以为null；key，value相等都标准同HashMap。
+    + Properties：用于读属性文件
+    + SortedMap、TreeMap：基于红黑树实现的，所有的key必须实现Comparable接口（自定义的类作为key时，要重写equals和compareTo方法），而且所有的key应该是同一个类的对象
+    + IdentifyHashMap: key相等的标准是严格相等（==）
+    + WeakHashMap: WeakHashMap的key保持了实际对象的弱引用
+    + EnumMap: 所有的key必须是单个枚举类的枚举值
+    
 
 3、Object若不重写hashCode()的话，hashCode()如何计算出来的？
 4、==比较的是什么？
