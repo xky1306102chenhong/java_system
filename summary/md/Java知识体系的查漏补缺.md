@@ -17,7 +17,8 @@
     + EnumMap: 所有的key必须是单个枚举类的枚举值
     
 
-3、Object若不重写hashCode()的话，hashCode()如何计算出来的？
+3、Object若不重写hashCode()的话，hashCode()如何计算出来的？  
+  + 
 4、==比较的是什么？
 
 5、若对一个类不重写，它的equals()方法是如何比较的？
