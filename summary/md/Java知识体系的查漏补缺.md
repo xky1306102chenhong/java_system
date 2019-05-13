@@ -18,12 +18,18 @@
     
 
 3、Object若不重写hashCode()的话，hashCode()如何计算出来的？  
-  + 
-4、==比较的是什么？
+  + 根据内存地址计算出来  
 
+4、==比较的是什么？
+  + 基本数据类型：比较的是数值相等即可返回true，不一定要相同的数据类型
+  + 引用数据类型：比较的是内存地址，即是否为同一个对象
+  
+  
 5、若对一个类不重写，它的equals()方法是如何比较的？
+  + 比较的是内存地址，即是否是同一对象
 
 6、java8新特性
+  + lambada表达式
 
 7、说说Lamda表达式的优缺点。
 
@@ -43,7 +49,9 @@
 
 15、int 和 Integer 有什么区别
 
-16、String 和StringBuffer的区别
+16、String 和StringBuffer的区别  
+https://mp.weixin.qq.com/s/tOh3Lb0jMNhsyrbm5s0VcA
+
 
 17、我们在web应用开发过程中经常遇到输出某种编码的字符，如iso8859-1等，如何输出一个某种编码的字符串？
 
